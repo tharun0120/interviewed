@@ -11,6 +11,7 @@ const login = (body) => {
       });
 
       await response.json().then((res) => {
+        localStorage.setItem("candidateToken", res.token);
         if (res.candidate) resolve(res.candidate);
         else reject(res.error);
       });

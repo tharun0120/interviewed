@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { login, logout, register, fetchCandidates } from "./rest";
+import {
+  login,
+  logout,
+  register,
+  fetchCandidates,
+  checkAuthentication,
+} from "./rest";
 
 const initialState = {
   hr: null,
@@ -44,6 +50,16 @@ const logoutHR = createAsyncThunk("/api/hr/logout", (body, thunkAPI) => {
 const getCandidates = createAsyncThunk("/api/hr/logout", (body, thunkAPI) => {
   return new Promise(async (resolve, reject) => {
     fetchCandidates(body)
+      .then((data) => resolve(data))
+      .catch((error) => {
+        reject(thunkAPI.rejectWithValue(error));
+      });
+  });
+});
+
+const validateToken = createAsyncThunk("/api/hr/validate", (body, thunkAPI) => {
+  return new Promise(async (resolve, reject) => {
+    checkAuthentication(body)
       .then((data) => resolve(data))
       .catch((error) => {
         reject(thunkAPI.rejectWithValue(error));
@@ -132,7 +148,6 @@ const HRSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
-      state.isLoggedIn = false;
       state.candidates = payload;
     },
     [getCandidates.rejected]: (state, { payload }) => {
@@ -141,10 +156,30 @@ const HRSlice = createSlice({
       state.isSuccess = false;
       state.error = payload;
     },
+    //check authentication
+    [validateToken.pending]: (state) => {
+      state.isFetching = true;
+      state.isError = false;
+      state.isSuccess = false;
+    },
+    [validateToken.fulfilled]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isSuccess = true;
+      state.isError = false;
+      state.isLoggedIn = true;
+      state.hr = payload;
+    },
+    [validateToken.rejected]: (state, { payload }) => {
+      state.isFetching = false;
+      state.isError = true;
+      state.isSuccess = false;
+      state.isLoggedIn = false;
+      state.error = payload;
+    },
   },
 });
 
-export { loginHR, registerHR, logoutHR, getCandidates };
+export { loginHR, registerHR, logoutHR, getCandidates, validateToken };
 
 export const { clearState } = HRSlice.actions;
 

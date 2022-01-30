@@ -35,7 +35,7 @@ const register = (body) => {
       });
 
       await response.json().then((res) => {
-        console.log(res);
+        // console.log(res);
         if (res.hr) {
           localStorage.setItem("token", res.token);
           resolve(res.hr);
@@ -96,4 +96,27 @@ const fetchCandidates = () => {
   });
 };
 
-export { login, register, logout, fetchCandidates };
+const checkAuthentication = () => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const response = await fetch("/api/validate/hr", {
+        method: "GET",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      });
+      await response.json().then((res) => {
+        if (res.hr) {
+          // console.log(res.hr);
+          resolve(res.hr);
+        } else reject(res.error);
+      });
+    } catch (error) {
+      reject(error);
+    }
+  });
+};
+
+export { login, register, logout, fetchCandidates, checkAuthentication };

@@ -16,6 +16,7 @@ import {
 } from "../utils/FormComponents";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, loginHR, selectHR } from "../../redux/hr/HRSlice";
+import Loader from "../utils/Loader";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -29,19 +30,20 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const LoginHR = () => {
-  const { isSuccess, isError, error, isLoggedIn } = useSelector(selectHR);
+  const { isSuccess, isError, error, isLoggedIn, isFetching } =
+    useSelector(selectHR);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSuccess && isLoggedIn) {
+    if (isLoggedIn) {
       toast.success("Logged in");
       navigate("/");
     } else if (isError) {
       toast.error(error);
       dispatch(clearState());
     }
-  }, [isSuccess, isError, error]); //eslint-disable-line
+  }, [isSuccess, isError, error, isLoggedIn]); //eslint-disable-line
 
   return (
     <>
@@ -65,32 +67,36 @@ const LoginHR = () => {
           };
           dispatch(loginHR(body));
         }}>
-        <Container>
-          <Hero>
-            <h1>Interviewed.</h1>
-          </Hero>
-          <Divider></Divider>
-          <LoginContainer>
-            <h2>Login</h2>
-            <Form>
-              <MyTextInput
-                label="Email"
-                name="email"
-                type="text"
-                placeholder="example@mail.com"
-              />
-              <MyTextInput label="Password" name="password" type="password" />
+        {isFetching ? (
+          <Loader />
+        ) : (
+          <Container>
+            <Hero>
+              <h1>Interviewed.</h1>
+            </Hero>
+            <Divider></Divider>
+            <LoginContainer>
+              <h2>Login</h2>
+              <Form>
+                <MyTextInput
+                  label="Email"
+                  name="email"
+                  type="text"
+                  placeholder="example@mail.com"
+                />
+                <MyTextInput label="Password" name="password" type="password" />
+                <Wrap>
+                  <Button type="submit">Login</Button>
+                </Wrap>
+              </Form>
               <Wrap>
-                <Button type="submit">Login</Button>
+                <span>
+                  New here? <Link to="/register">Register</Link>
+                </span>
               </Wrap>
-            </Form>
-            <Wrap>
-              <span>
-                New here? <Link to="/register">Register</Link>
-              </span>
-            </Wrap>
-          </LoginContainer>
-        </Container>
+            </LoginContainer>
+          </Container>
+        )}
       </Formik>
     </>
   );

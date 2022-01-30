@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const auth = require("../middleware/auth");
 const Candidate = require("../db/models/candidates");
+const HR = require("../db/models/hr");
 
 //get all candidates for the hr
 router.get("/candidates", auth, async (req, res) => {
@@ -11,8 +12,17 @@ router.get("/candidates", auth, async (req, res) => {
 
     res.status(200).send({ candidates });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(500).send({ error: "Oops an error occured" });
+  }
+});
+
+//validate hr token
+router.get("/validate/hr", auth, async (req, res) => {
+  try {
+    res.status(200).send({ hr: req.hr });
+  } catch (error) {
+    res.status(401).send({ error: error });
   }
 });
 

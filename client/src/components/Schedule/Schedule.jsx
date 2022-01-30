@@ -11,13 +11,19 @@ const Schedule = () => {
   const [schedule, setSchedule] = useState(false);
   const [view, setView] = useState(false);
   const [home, setHome] = useState(true);
-  const { hr, isSuccess, isError, error } = useSelector(selectHR);
+  const { hr, isSuccess, isError, isLoggedIn, error } = useSelector(selectHR);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
     setHome(!(schedule || view));
   }, [view, schedule]);
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/login");
+    }
+  }, [isLoggedIn]); //eslint-disable-line
 
   const logout = async () => {
     dispatch(logoutHR());

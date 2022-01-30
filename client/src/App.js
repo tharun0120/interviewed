@@ -9,17 +9,32 @@ import Register from "./components/Register/Register";
 import Schedule from "./components/Schedule/Schedule";
 import ThankYou from "./components/utils/ThankYou";
 import Loader from "./components/utils/Loader";
+import PrivateRoute from "./components/utils/PrivateRoute";
 
 const App = () => {
   return (
     <>
       <Router>
         <Routes>
-          <Route path="/" element={<Schedule />} />
+          <Route
+            path="/"
+            element={
+              <PrivateRoute>
+                <Schedule />
+              </PrivateRoute>
+            }
+          />
           <Route path="/login" element={<LoginHR />} />
           <Route path="/register" element={<Register />} />
           <Route path="/candidate/login" element={<LoginCandidate />} />
-          <Route path="/test" element={<Test />} />
+          <Route
+            path="/test"
+            element={
+              <PrivateRoute>
+                <Test />
+              </PrivateRoute>
+            }
+          />
           <Route path="/end" element={<ThankYou />} />
           <Route path="/load" element={<Loader />} />
         </Routes>

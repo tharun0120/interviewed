@@ -28,12 +28,12 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const Register = () => {
-  const { isSuccess, isError, error } = useSelector(selectHR);
+  const { isSuccess, isError, error, isLoggedIn } = useSelector(selectHR);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && isLoggedIn) {
       toast.success("Registered Successfully");
       navigate("/");
     } else if (isError) {

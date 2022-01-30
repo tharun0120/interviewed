@@ -6,7 +6,8 @@ import { selectHR, getCandidates } from "../../redux/hr/HRSlice";
 
 const ListSchedule = () => {
   const dispatch = useDispatch();
-  const { candidates, isSuccess, isError, error } = useSelector(selectHR);
+  const { candidates, isSuccess, isError, error, isLoggedIn } =
+    useSelector(selectHR);
 
   useEffect(() => {
     if (isError) {
@@ -16,7 +17,7 @@ const ListSchedule = () => {
 
   useEffect(() => {
     dispatch(getCandidates());
-  }, []); //eslint-disable-line
+  }, [isLoggedIn]); //eslint-disable-line
 
   return (
     <Container>
@@ -47,33 +48,33 @@ const ListSchedule = () => {
                 <span>Assessment</span>
               </Item>
             </Row>
-            {candidates.map((candidate) => {
-              console.log(candidate);
-              return (
-                <Row>
-                  <Item>
-                    <span>{candidate?.name}</span>
-                  </Item>
-                  <Item>
-                    <span>{candidate?.email}</span>
-                  </Item>
-                  <Item>
-                    {candidate?.isInterviewComplete ? (
-                      <Tag style={{ backgroundColor: "lightgreen" }}>
-                        Complete
-                      </Tag>
-                    ) : (
-                      <Tag style={{ backgroundColor: "lightblue" }}>
-                        Didnt Start
-                      </Tag>
-                    )}
-                  </Item>
-                  <Item>
-                    <span>blob download</span>
-                  </Item>
-                </Row>
-              );
-            })}
+            {candidates &&
+              candidates?.map((candidate) => {
+                return (
+                  <Row key={candidate._id}>
+                    <Item>
+                      <span>{candidate?.name}</span>
+                    </Item>
+                    <Item>
+                      <span>{candidate?.email}</span>
+                    </Item>
+                    <Item>
+                      {candidate?.isInterviewComplete ? (
+                        <Tag style={{ backgroundColor: "lightgreen" }}>
+                          Complete
+                        </Tag>
+                      ) : (
+                        <Tag style={{ backgroundColor: "lightblue" }}>
+                          Didnt Start
+                        </Tag>
+                      )}
+                    </Item>
+                    <Item>
+                      <span>blob download</span>
+                    </Item>
+                  </Row>
+                );
+              })}
           </Table>
         </>
       )}
