@@ -2,6 +2,16 @@ import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
 
 const Test = () => {
+  //questions
+  const questions = [
+    "Tell us about yourself?",
+    "What are you passionate about?",
+    "How are you seeing yourself in 5 years?",
+    "Why should we hire you?",
+    "What are your strengths and weaknesses?",
+  ];
+  const [nextQuestion, setNextQuestion] = useState(-1);
+
   const [stream, setStream] = useState();
   const myVideo = useRef();
   let media_recorder = null;
@@ -19,6 +29,7 @@ const Test = () => {
   }, []);
 
   const startRec = () => {
+    setNextQuestion(nextQuestion + 1);
     // set MIME type of recording as video/webm
     media_recorder = new MediaRecorder(stream, {
       mimeType: "video/webm",
@@ -107,7 +118,11 @@ const Test = () => {
     <Container>
       <Wrapper>
         <QuestionSection>
-          <span>This is the first Question</span>
+          {nextQuestion === -1 ? (
+            <span>Click start to start the interview</span>
+          ) : (
+            <span>{questions[nextQuestion]}</span>
+          )}
         </QuestionSection>
         <VideoSection>
           <video
@@ -118,11 +133,15 @@ const Test = () => {
             style={{ width: "100%", height: "90%" }}
           />
           <Controls>
-            <button onClick={startRec}>Start Recording</button>
-            <button onClick={stopRec}>Stop Recording</button>
-            <a ref={download_link} download="test.webm" href={url}>
-              Download Video
-            </a>
+            {nextQuestion === -1 ? (
+              <Button onClick={startRec}>Start</Button>
+            ) : nextQuestion < 4 ? (
+              <Button onClick={() => setNextQuestion(nextQuestion + 1)}>
+                Next
+              </Button>
+            ) : (
+              <Button onClick={stopRec}>End</Button>
+            )}
           </Controls>
         </VideoSection>
       </Wrapper>
@@ -155,6 +174,7 @@ const QuestionSection = styled.div`
   align-items: center;
   justify-content: center;
   font-size: 40px;
+  text-align: center;
 `;
 const VideoSection = styled.div`
   width: 80%;
@@ -167,5 +187,23 @@ const Controls = styled.div`
   display: flex;
   padding-top: 20px;
 `;
+const Button = styled.button`
+  cursor: pointer;
+  outline: none;
+  color: white;
+  background-color: black;
+  width: 150px;
+  height: 40px;
+  font-size: 15px;
+  margin: 0 15px;
+  letter-spacing: 1px;
+  border: none;
+`;
 
 export default Test;
+
+{
+  /* <a ref={download_link} download="test.webm" href={url}>
+              Download Video
+            </a> */
+}

@@ -9,11 +9,12 @@ router.post("/register/hr", async (req, res) => {
   try {
     await hr.save();
 
-    const token = await HR.generateAuthToken();
+    const token = await hr.generateAuthToken();
 
     res.status(201).send({ hr, token });
   } catch (error) {
-    res.status(400).send(error);
+    // console.log(error);
+    res.status(400).send({ error: "User Already Exists" });
   }
 });
 
@@ -25,28 +26,32 @@ router.post("/register/candidate", async (req, res) => {
 
     res.status(201).send({ candidate });
   } catch (error) {
-    res.status(400).send(error);
+    // console.log(error);
+    res.status(400).send({ error: "Candidate Already Exists" });
   }
 });
 
-router.get("/login/hr", async (req, res) => {
+router.post("/login/hr", async (req, res) => {
   try {
     const hr = await HR.findByCredentials(req.body.email, req.body.password);
-    const token = await HR.generateAuthToken();
+    const token = await hr.generateAuthToken();
     res.status(200).send({ hr, token });
   } catch (error) {
+    // console.log(error);
     res.status(400).send({ error: "Invalid Credentials" });
   }
 });
 
-router.get("/login/candidate", async (req, res) => {
+router.post("/login/candidate", async (req, res) => {
   try {
     const candidate = await Candidate.findByCredentials(
       req.body.email,
       req.body.password
     );
-    res.status(200).send({ candidate });
+    console.log(candidate);
+    if (candidate) res.status(200).send({ candidate });
   } catch (error) {
+    console.log(error);
     res.status(400).send({ error: "Invalid Credentials" });
   }
 });
@@ -59,7 +64,7 @@ router.post("/logout/hr", auth, async (req, res) => {
     await req.hr.save();
     res.status(200).send({ message: "Logged out successfully" });
   } catch (error) {
-    res.status(500).send(error);
+    res.status(500).send({ error });
   }
 });
 

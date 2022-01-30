@@ -1,5 +1,6 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import {
@@ -12,11 +13,11 @@ import {
   Button,
   Error,
 } from "../utils/FormComponents";
+import { useDispatch, useSelector } from "react-redux";
+import { clearState, registerHR, selectHR } from "../../redux/hr/HRSlice";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
-  // style={{ borderColor: `${border}` }}
-  // const border = meta.error ? "red" : null;
   return (
     <Wrap>
       <label htmlFor={props.id || props.name}>{label}</label>
@@ -27,6 +28,20 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const Register = () => {
+  const { isSuccess, isError, error } = useSelector(selectHR);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Registered Successfully");
+      navigate("/");
+    } else if (isError) {
+      toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isSuccess, isError, error]); //eslint-disable-line
+
   return (
     <>
       <Formik
@@ -45,10 +60,12 @@ const Register = () => {
             .required("Required"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          const body = {
+            name: values.name,
+            email: values.email,
+            password: values.password,
+          };
+          dispatch(registerHR(body));
         }}>
         <Container>
           <Hero>

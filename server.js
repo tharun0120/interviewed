@@ -23,8 +23,8 @@ app.use("/api", authRoutes);
 app.use("/api", hrRoutes);
 app.use("/api", candidateRoutes);
 
-app.get("/test", (req, res) => {
-  res.status(200).send("Server is up and running!");
+app.get("/api/test", (req, res) => {
+  res.status(200).send({ message: "Server is up and running!" });
 });
 
 app.use(express.static(path.resolve(__dirname, "./client/build")));

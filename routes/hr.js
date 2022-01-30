@@ -7,11 +7,12 @@ router.get("/candidates", auth, async (req, res) => {
   try {
     const candidates = await Candidate.find({
       hr_id: req.hr._id,
-    }).sort({ createdAt: -1 });
+    });
 
-    res.status(200).send(candidates);
+    res.status(200).send({ candidates });
   } catch (error) {
-    res.status(500).send(error);
+    console.log(error);
+    res.status(500).send({ error: "Oops an error occured" });
   }
 });
 

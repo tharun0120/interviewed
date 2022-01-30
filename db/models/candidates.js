@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const bcrypt = require("bcryptjs");
 
 const candidateSchema = mongoose.Schema(
   {
@@ -61,7 +62,7 @@ candidateSchema.statics.findByCredentials = async (email, password) => {
     throw new Error("No such User found");
   }
 
-  const isMatch = await bcrypt.compare(password, candidate.password);
+  const isMatch = await bcrypt.compare(password, candidateObject.password);
 
   if (!isMatch) {
     throw new Error("Invalid password");

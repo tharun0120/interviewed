@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Formik, Form, useField } from "formik";
 import * as Yup from "yup";
 import {
@@ -11,6 +11,14 @@ import {
   Button,
   Error,
 } from "../utils/FormComponents";
+import { toast } from "react-toastify";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import {
+  selectCandidate,
+  clearState,
+  loginCandidate,
+} from "../../redux/candidate/candidateSlice";
 
 const MyTextInput = ({ label, ...props }) => {
   const [field, meta] = useField(props);
@@ -24,6 +32,20 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const LoginCandidate = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const { isSuccess, isError, error } = useSelector(selectCandidate);
+
+  useEffect(() => {
+    if (isSuccess) {
+      toast.success("Logged in");
+      navigate("/test");
+    } else if (isError) {
+      toast.error(error);
+      dispatch(clearState());
+    }
+  }, [isSuccess, isError, error]); //eslint-disable-line
+
   return (
     <>
       <Formik
@@ -40,10 +62,11 @@ const LoginCandidate = () => {
             .required("Required"),
         })}
         onSubmit={(values, { setSubmitting }) => {
-          setTimeout(() => {
-            alert(JSON.stringify(values, null, 2));
-            setSubmitting(false);
-          }, 400);
+          const body = {
+            email: values.email,
+            password: values.password,
+          };
+          dispatch(loginCandidate(body));
         }}>
         <Container>
           <Hero>

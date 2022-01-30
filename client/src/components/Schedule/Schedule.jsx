@@ -1,23 +1,70 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-// import { MdOutlineAccountCircle } from "react-icons/md";
+import AddSchedule from "./AddSchedule";
+import ListSchedule from "./ListSchedule";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutHR, selectHR, clearState } from "../../redux/hr/HRSlice";
+import { toast } from "react-toastify";
 
 const Schedule = () => {
+  const [schedule, setSchedule] = useState(false);
+  const [view, setView] = useState(false);
+  const [home, setHome] = useState(true);
+  const { hr, isSuccess, isError, error } = useSelector(selectHR);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    setHome(!(schedule || view));
+  }, [view, schedule]);
+
+  const logout = async () => {
+    dispatch(logoutHR());
+    if (isSuccess) {
+      dispatch(clearState());
+      toast.success("Logged Out");
+      navigate("/login");
+    } else if (isError) {
+      toast.error(error);
+      dispatch(clearState());
+    }
+  };
+
   return (
     <Container>
       <Nav>
         <h2>Interviewed.</h2>
         <Wrap>
-          <span>Scheudle</span>
-          <span>View Candidates</span>
+          <Button
+            onClick={() => {
+              setSchedule(!schedule);
+              setView(false);
+            }}>
+            Scheudle
+          </Button>
+          <Button
+            onClick={() => {
+              setView(!view);
+              setSchedule(false);
+            }}>
+            View Candidates
+          </Button>
         </Wrap>
-        <Button>Logout</Button>
+        <Button onClick={() => logout()}>Logout</Button>
       </Nav>
       <Main>
-        <h2>Hello There!</h2>
-        <p>Click Schedule to schedule interviews.</p>
-        <p>Click view candidates to views the scheduled interviews.</p>
-        <ScheduledList>{/* <MdOutlineAccountCircle /> */}</ScheduledList>
+        {home && (
+          <>
+            <h2>Hello There, {hr?.name}!</h2>
+            <p>Click Schedule to schedule interviews.</p>
+            <p>Click view candidates to views the scheduled interviews.</p>
+          </>
+        )}
+        {schedule && (
+          <AddSchedule setHome={setHome} setSchedule={setSchedule} />
+        )}
+        {view && <ListSchedule />}
       </Main>
     </Container>
   );
@@ -31,7 +78,6 @@ const Container = styled.div`
   justify-content: start;
 `;
 const Nav = styled.nav`
-  /* width: 1132px; */
   width: 20%;
   height: 80%;
   border-right: 1.5px solid black;
@@ -63,8 +109,7 @@ const Button = styled.button`
   cursor: pointer;
   border-radius: 5px;
   padding: 5px;
+  margin-top: 10px;
 `;
-
-const ScheduledList = styled.div``;
 
 export default Schedule;
