@@ -9,7 +9,8 @@
     "start": "NODE_ENV=PRODUCTION npm run build && npm install && node server",
     "client": "npm run start --prefix client",
     "server": "cross-env NODE_ENV=DEV nodemon server",
-    "dev": "concurrently \"npm run client\" \"npm run server\""
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "azure": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm run start"
   },
   "keywords": [
     "azure",
