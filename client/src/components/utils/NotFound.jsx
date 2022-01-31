@@ -1,12 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
-const ThankYou = () => {
+const NotFound = () => {
   return (
     <Container>
-      <span style={{ fontSize: "40px" }}>Thank You!</span>
-      <span>The interview has been submitted successfully.</span>
-      <span>Please be patient. Hr will reach you through your mail.</span>
+      <span style={{ fontSize: "40px" }}>Seems like You are lost!</span>
+      <span>
+        Reach Home Safely through here <Link to="/">Home .</Link>
+      </span>
     </Container>
   );
 };
@@ -20,4 +22,4 @@ const Container = styled.div`
   justify-content: center;
 `;
 
-export default ThankYou;
+export default NotFound;

@@ -97,6 +97,8 @@ const Wrap = styled.div`
   display: flex;
   flex-direction: column;
   text-align: center;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Main = styled.main`
@@ -116,6 +118,12 @@ const Button = styled.button`
   border-radius: 5px;
   padding: 5px;
   margin-top: 10px;
+  width: 150px;
+  border: none;
+  background-color: black;
+  color: white;
+  align-self: center;
+  padding: 10px 15px;
 `;
 
 export default Schedule;

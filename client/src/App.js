@@ -11,6 +11,7 @@ import Schedule from "./components/Schedule/Schedule";
 import ThankYou from "./components/utils/ThankYou";
 import Loader from "./components/utils/Loader";
 import PrivateRoute from "./components/utils/PrivateRoute";
+import NotFound from "./components/utils/NotFound";
 
 const App = () => {
   return (
@@ -20,7 +21,7 @@ const App = () => {
           <Route
             path="/"
             element={
-              <PrivateRoute>
+              <PrivateRoute from="hr">
                 <Schedule />
               </PrivateRoute>
             }
@@ -31,13 +32,14 @@ const App = () => {
           <Route
             path="/test"
             element={
-              <PrivateRoute>
+              <PrivateRoute from="candidate">
                 <Test />
               </PrivateRoute>
             }
           />
           <Route path="/end" element={<ThankYou />} />
           <Route path="/load" element={<Loader />} />
+          <Route path="/*" element={<NotFound />} />
         </Routes>
       </Router>
       <ToastContainer

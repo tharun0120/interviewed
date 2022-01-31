@@ -33,7 +33,7 @@ const candidateSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    blob: {
+    blobURL: {
       type: String,
     },
     hr_id: {

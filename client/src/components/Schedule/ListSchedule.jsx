@@ -70,7 +70,15 @@ const ListSchedule = () => {
                       )}
                     </Item>
                     <Item>
-                      <span>blob download</span>
+                      {candidate?.blobURL ? (
+                        <a
+                          href={candidate.blobURL}
+                          download={`${candidate.name}-interview-video.webm`}>
+                          Download
+                        </a>
+                      ) : (
+                        <span>Not Available</span>
+                      )}
                     </Item>
                   </Row>
                 );

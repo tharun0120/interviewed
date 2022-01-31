@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { Formik, Form, useField } from "formik";
@@ -45,7 +45,9 @@ const LoginHR = () => {
     }
   }, [isSuccess, isError, error, isLoggedIn]); //eslint-disable-line
 
-  return (
+  return isLoggedIn ? (
+    <Navigate to="/" />
+  ) : (
     <>
       <Formik
         initialValues={{

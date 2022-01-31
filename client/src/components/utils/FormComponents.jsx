@@ -47,7 +47,9 @@ const Input = styled.input`
   font-size: 20px;
   width: 350px;
   padding: 10px;
-  border-radius: 5px;
+  /* border-radius: 5px; */
+  border: none;
+  border-bottom: 2px solid black;
   outline: none;
 `;
 
@@ -57,8 +59,11 @@ const Button = styled.button`
   outline: none;
   cursor: pointer;
   border-radius: 5px;
+  border: none;
+  background-color: black;
+  color: white;
   align-self: center;
-  padding: 5px;
+  padding: 10px 15px;
 `;
 
 const Error = styled.div`

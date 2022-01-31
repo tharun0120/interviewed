@@ -22,25 +22,27 @@ router.post("/uploadToAzureBlob", candidateAuth, async (req, res) => {
     const containerClient = blobServiceClient.getContainerClient(containerName);
 
     const blockBlobClient = containerClient.getBlockBlobClient(blobName);
-    try {
-      const containerProperties = await containerClient.getProperties();
-      // console.log(containerProperties);
-    } catch (error) {
-      const createContainerResponse = await containerClient.create();
-      console.log(
-        "Container was created successfully. requestId: ",
-        createContainerResponse.requestId
-      );
-    }
-    const uploadBlobResponse = await blockBlobClient.upload(
-      dataBuffer,
-      dataBuffer.length
-    );
-    console.log(
-      "Blob was uploaded successfully. requestId: ",
-      uploadBlobResponse.requestId
-    );
 
+    await containerClient.createIfNotExists();
+    await containerClient.setAccessPolicy("blob");
+
+    // const createContainerResponse =
+    // console.log(
+    //   "Container was created successfully. requestId: ",
+    //   createContainerResponse.requestId
+    // );
+
+    await blockBlobClient.upload(dataBuffer, dataBuffer.length);
+
+    // const uploadBlobResponse =
+    // console.log(
+    //   "Blob was uploaded successfully. requestId: ",
+    //   uploadBlobResponse.requestId
+    // );
+    // console.log(blockBlobClient.url);
+
+    req.candidate.blobURL = blockBlobClient.url;
+    req.candidate.save();
     res.status(200).send({ message: "Uploaded Successfully" });
   } catch (error) {
     // console.log(error);

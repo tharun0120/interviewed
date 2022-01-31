@@ -59,6 +59,7 @@ const update = (body) => {
       await response.json().then((res) => {
         if (res.candidate) {
           localStorage.removeItem("candidateToken");
+          localStorage.removeItem("token");
           resolve(res.candidate);
         } else reject(res.error);
       });
