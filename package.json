@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cd ./client && npm install && npm run build",
     "test": "echo \"Error: no test specified\"",
-    "start": "NODE_ENV=PRODUCTION npm run build && npm install && node server",
+    "start": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm run start",
     "client": "npm run start --prefix client",
     "server": "cross-env NODE_ENV=DEV nodemon server",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
