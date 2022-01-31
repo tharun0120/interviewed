@@ -6,11 +6,10 @@
   "scripts": {
     "build": "cd ./client && npm install && npm run build",
     "test": "echo \"Error: no test specified\"",
-    "start": "npm install --prefix client && npm run build --prefix client && npm run start",
+    "start": "cross-env NODE_ENV=PRODUCTION npm run build && node server",
     "client": "npm run start --prefix client",
     "server": "cross-env NODE_ENV=DEV nodemon server",
-    "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "azure": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client && npm run start"
+    "dev": "concurrently \"npm run client\" \"npm run server\""
   },
   "keywords": [
     "azure",
