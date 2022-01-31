@@ -6,7 +6,7 @@
   "scripts": {
     "build": "cd ./client && npm install && npm run build",
     "test": "echo \"Error: no test specified\"",
-    "start": "cross-env NODE_ENV=PRODUCTION npm run build && node server",
+    "start": "cross-env NODE_ENV=PRODUCTION npm run build && npm install && node server",
     "client": "npm run start --prefix client",
     "server": "cross-env NODE_ENV=DEV nodemon server",
     "dev": "concurrently \"npm run client\" \"npm run server\""
