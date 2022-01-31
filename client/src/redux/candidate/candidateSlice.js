@@ -70,7 +70,7 @@ const candidateSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
-      state.candidate = payload.candidate;
+      state.candidate = payload;
     },
     [loginCandidate.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -88,7 +88,7 @@ const candidateSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
-      state.candidate = payload.candidate;
+      state.candidate = payload;
     },
     [registerCandidate.rejected]: (state, { payload }) => {
       state.isFetching = false;
@@ -107,7 +107,7 @@ const candidateSlice = createSlice({
       state.isFetching = false;
       state.isSuccess = true;
       state.isError = false;
-      state.candidate = payload.candidate;
+      state.candidate = payload;
     },
     [updateCandidate.rejected]: (state, { payload }) => {
       state.isFetching = false;

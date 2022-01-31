@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import styled from "styled-components";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Test = () => {
   //questions
@@ -11,6 +13,8 @@ const Test = () => {
     "What are your strengths and weaknesses?",
   ];
   const [nextQuestion, setNextQuestion] = useState(-1);
+
+  const navigate = useNavigate();
 
   const [stream, setStream] = useState();
   const myVideo = useRef();
@@ -25,11 +29,15 @@ const Test = () => {
       .then((stream) => {
         setStream(stream);
         myVideo.current.srcObject = stream;
+      })
+      .catch((err) => {
+        if (err.name === "NotAllowedError") {
+          toast.info("Allow access for the webcam");
+        }
       });
   }, []);
 
   const startRec = () => {
-    setNextQuestion(nextQuestion + 1);
     // set MIME type of recording as video/webm
     media_recorder = new MediaRecorder(stream, {
       mimeType: "video/webm",
@@ -50,10 +58,11 @@ const Test = () => {
       console.log(video);
       // console.log(video_local);
       setUrl(video_local);
-      sendBlobAsBase64(video);
+      // sendBlobAsBase64(video);
     });
 
     // start recording with each recorded blob having 1 second video
+    console.log("start");
     media_recorder.start(1000);
   };
 
@@ -89,6 +98,7 @@ const Test = () => {
 
   const stopRec = () => {
     media_recorder.stop();
+    navigate("/end");
   };
 
   const b64toBlob = (b64Data, contentType = "", sliceSize = 512) => {
@@ -134,7 +144,13 @@ const Test = () => {
           />
           <Controls>
             {nextQuestion === -1 ? (
-              <Button onClick={startRec}>Start</Button>
+              <Button
+                onClick={() => {
+                  startRec();
+                  setNextQuestion(nextQuestion + 1);
+                }}>
+                Start
+              </Button>
             ) : nextQuestion < 4 ? (
               <Button onClick={() => setNextQuestion(nextQuestion + 1)}>
                 Next

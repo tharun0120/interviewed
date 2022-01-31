@@ -22,7 +22,7 @@ router.get("/validate/hr", auth, async (req, res) => {
   try {
     res.status(200).send({ hr: req.hr });
   } catch (error) {
-    res.status(401).send({ error: error });
+    res.status(401).send({ error: "Please Authenticate" });
   }
 });
 

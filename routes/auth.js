@@ -48,8 +48,9 @@ router.post("/login/candidate", async (req, res) => {
       req.body.email,
       req.body.password
     );
-    console.log(candidate);
-    if (candidate) res.status(200).send({ candidate });
+    const token = await candidate.generateAuthToken();
+    // console.log(candidate);
+    if (candidate) res.status(200).send({ candidate, token });
   } catch (error) {
     console.log(error);
     res.status(400).send({ error: "Invalid Credentials" });

@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const validator = require("validator");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 const candidateSchema = mongoose.Schema(
@@ -40,11 +41,32 @@ const candidateSchema = mongoose.Schema(
       required: true,
       ref: "hr",
     },
+    tokens: [
+      {
+        token: {
+          type: String,
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
   }
 );
+
+candidateSchema.methods.generateAuthToken = async function () {
+  const candidate = this;
+
+  const token = jwt.sign(
+    { _id: candidate.id.toString() },
+    process.env.JWT_SECRET
+  );
+  candidate.tokens = candidate.tokens.concat({ token });
+  await candidate.save();
+
+  return token;
+};
 
 candidateSchema.methods.toJSON = function () {
   const candidate = this;

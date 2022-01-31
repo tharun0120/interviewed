@@ -34,12 +34,18 @@ const MyTextInput = ({ label, ...props }) => {
 const LoginCandidate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isSuccess, isError, error } = useSelector(selectCandidate);
+  const { candidate, isSuccess, isError, error } = useSelector(selectCandidate);
 
   useEffect(() => {
     if (isSuccess) {
-      toast.success("Logged in");
-      navigate("/test");
+      if (candidate?.isInterviewComplete) {
+        localStorage.removeItem("candidateToken");
+        toast.info("You have completed your interview");
+        dispatch(clearState());
+      } else {
+        toast.success("Logged in");
+        navigate("/test");
+      }
     } else if (isError) {
       toast.error(error);
       dispatch(clearState());
