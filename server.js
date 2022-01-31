@@ -7,7 +7,6 @@ const cors = require("cors");
 const morgan = require("morgan");
 const fs = require("fs");
 const path = require("path");
-const bodyParser = require("body-parser");
 const authRoutes = require("./routes/auth");
 const hrRoutes = require("./routes/hr");
 const candidateRoutes = require("./routes/candidate");

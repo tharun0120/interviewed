@@ -14,6 +14,7 @@ import {
 import { toast } from "react-toastify";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from "../utils/Loader";
 import {
   selectCandidate,
   clearState,
@@ -34,7 +35,8 @@ const MyTextInput = ({ label, ...props }) => {
 const LoginCandidate = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { candidate, isSuccess, isError, error } = useSelector(selectCandidate);
+  const { candidate, isSuccess, isError, error, isFetching } =
+    useSelector(selectCandidate);
 
   useEffect(() => {
     if (isSuccess) {
@@ -54,6 +56,7 @@ const LoginCandidate = () => {
 
   return (
     <>
+      {isFetching ? <Loader /> : <></>}
       <Formik
         initialValues={{
           email: "",

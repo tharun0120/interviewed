@@ -58,6 +58,8 @@ const Test = () => {
       setBlob(recorderRef.current.getBlob());
       // console.log(recorderRef.current.getBlob());
       handleUpload(recorderRef.current.getBlob());
+      stream.getVideoTracks()[0].stop();
+      setStream(null);
     });
   };
 

@@ -49,6 +49,7 @@ const LoginHR = () => {
     <Navigate to="/" />
   ) : (
     <>
+      {isFetching ? <Loader /> : <></>}
       <Formik
         initialValues={{
           email: "",
@@ -69,36 +70,32 @@ const LoginHR = () => {
           };
           dispatch(loginHR(body));
         }}>
-        {isFetching ? (
-          <Loader />
-        ) : (
-          <Container>
-            <Hero>
-              <h1>Interviewed.</h1>
-            </Hero>
-            <Divider></Divider>
-            <LoginContainer>
-              <h2>Login</h2>
-              <Form>
-                <MyTextInput
-                  label="Email"
-                  name="email"
-                  type="text"
-                  placeholder="example@mail.com"
-                />
-                <MyTextInput label="Password" name="password" type="password" />
-                <Wrap>
-                  <Button type="submit">Login</Button>
-                </Wrap>
-              </Form>
+        <Container>
+          <Hero>
+            <h1>Interviewed.</h1>
+          </Hero>
+          <Divider></Divider>
+          <LoginContainer>
+            <h2>Login</h2>
+            <Form>
+              <MyTextInput
+                label="Email"
+                name="email"
+                type="text"
+                placeholder="example@mail.com"
+              />
+              <MyTextInput label="Password" name="password" type="password" />
               <Wrap>
-                <span>
-                  New here? <Link to="/register">Register</Link>
-                </span>
+                <Button type="submit">Login</Button>
               </Wrap>
-            </LoginContainer>
-          </Container>
-        )}
+            </Form>
+            <Wrap>
+              <span>
+                New here? <Link to="/register">Register</Link>
+              </span>
+            </Wrap>
+          </LoginContainer>
+        </Container>
       </Formik>
     </>
   );

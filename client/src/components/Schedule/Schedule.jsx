@@ -5,13 +5,16 @@ import AddSchedule from "./AddSchedule";
 import ListSchedule from "./ListSchedule";
 import { useDispatch, useSelector } from "react-redux";
 import { logoutHR, selectHR, clearState } from "../../redux/hr/HRSlice";
+import { selectCandidate } from "../../redux/candidate/candidateSlice";
 import { toast } from "react-toastify";
+import Loader from "../utils/Loader";
 
 const Schedule = () => {
   const [schedule, setSchedule] = useState(false);
   const [view, setView] = useState(false);
   const [home, setHome] = useState(true);
   const { hr, isSuccess, isError, isLoggedIn, error } = useSelector(selectHR);
+  const { isFetching } = useSelector(selectCandidate);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -20,7 +23,7 @@ const Schedule = () => {
   }, [view, schedule]);
 
   useEffect(() => {
-    if (!isLoggedIn) {
+    if (!localStorage.getItem("token") && !isLoggedIn) {
       navigate("/login");
     }
   }, [isLoggedIn]); //eslint-disable-line
@@ -38,41 +41,44 @@ const Schedule = () => {
   };
 
   return (
-    <Container>
-      <Nav>
-        <h2>Interviewed.</h2>
-        <Wrap>
-          <Button
-            onClick={() => {
-              setSchedule(!schedule);
-              setView(false);
-            }}>
-            Scheudle
-          </Button>
-          <Button
-            onClick={() => {
-              setView(!view);
-              setSchedule(false);
-            }}>
-            View Candidates
-          </Button>
-        </Wrap>
-        <Button onClick={() => logout()}>Logout</Button>
-      </Nav>
-      <Main>
-        {home && (
-          <>
-            <h2>Hello There, {hr?.name}!</h2>
-            <p>Click Schedule to schedule interviews.</p>
-            <p>Click view candidates to views the scheduled interviews.</p>
-          </>
-        )}
-        {schedule && (
-          <AddSchedule setHome={setHome} setSchedule={setSchedule} />
-        )}
-        {view && <ListSchedule />}
-      </Main>
-    </Container>
+    <>
+      {isFetching ? <Loader /> : <></>}
+      <Container>
+        <Nav>
+          <h2>Interviewed.</h2>
+          <Wrap>
+            <Button
+              onClick={() => {
+                setSchedule(!schedule);
+                setView(false);
+              }}>
+              Scheudle
+            </Button>
+            <Button
+              onClick={() => {
+                setView(!view);
+                setSchedule(false);
+              }}>
+              View Candidates
+            </Button>
+          </Wrap>
+          <Button onClick={() => logout()}>Logout</Button>
+        </Nav>
+        <Main>
+          {home && (
+            <>
+              <h2>Hello There, {hr?.name}!</h2>
+              <p>Click Schedule to schedule interviews.</p>
+              <p>Click view candidates to views the scheduled interviews.</p>
+            </>
+          )}
+          {schedule && (
+            <AddSchedule setHome={setHome} setSchedule={setSchedule} />
+          )}
+          {view && <ListSchedule />}
+        </Main>
+      </Container>
+    </>
   );
 };
 

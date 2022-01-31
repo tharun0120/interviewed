@@ -13,6 +13,7 @@ import {
   Button,
   Error,
 } from "../utils/FormComponents";
+import Loader from "../utils/Loader";
 import { useDispatch, useSelector } from "react-redux";
 import { clearState, registerHR, selectHR } from "../../redux/hr/HRSlice";
 
@@ -28,7 +29,8 @@ const MyTextInput = ({ label, ...props }) => {
 };
 
 const Register = () => {
-  const { isSuccess, isError, error, isLoggedIn } = useSelector(selectHR);
+  const { isSuccess, isError, error, isLoggedIn, isFetching } =
+    useSelector(selectHR);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,6 +48,7 @@ const Register = () => {
     <Navigate to="/" />
   ) : (
     <>
+      {isFetching ? <Loader /> : <></>}
       <Formik
         initialValues={{
           name: "",
