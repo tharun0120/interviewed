@@ -57,7 +57,7 @@
 ### Azure Services Used
 
 <p align="center">
-<img src="./assets/azureServices.png" alt="azure services">
+<img src="./assets/azure-services.png" alt="azure services">
 </p>
 
 ---
