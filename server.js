@@ -12,7 +12,7 @@ const hrRoutes = require("./routes/hr");
 const candidateRoutes = require("./routes/candidate");
 
 app.use(express.json({ limit: "50mb" }));
-app.use(express.urlencoded({ limit: "50mb" }));
+app.use(express.urlencoded({ limit: "50mb", extended: "true" }));
 app.use(cors());
 if (process.env.NODE_ENV === "DEV") app.use(morgan("dev"));
 

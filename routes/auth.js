@@ -2,6 +2,7 @@ const router = require("express").Router();
 const auth = require("../middleware/auth");
 const HR = require("../db/models/hr");
 const Candidate = require("../db/models/candidates");
+const axios = require("axios");
 
 router.post("/register/hr", async (req, res) => {
   const hr = new HR(req.body);
@@ -18,8 +19,25 @@ router.post("/register/hr", async (req, res) => {
   }
 });
 
-router.post("/register/candidate", async (req, res) => {
+router.post("/register/candidate", auth, async (req, res) => {
   const candidate = new Candidate(req.body);
+
+  var jsonData = {
+    email: `${req.body.email}`,
+    name: `${req.body.name}`,
+    password: `${req.body.password}`,
+    hr_name: `${req.hr.name}`,
+  };
+
+  try {
+    const response = await axios.post(
+      process.env.AZURE_EMAIL_REQUEST_ENDPOINT,
+      jsonData
+    );
+    // console.log(response.body);
+  } catch (error) {
+    // console.log(error);
+  }
 
   try {
     await candidate.save();
