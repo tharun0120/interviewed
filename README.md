@@ -1,4 +1,4 @@
-<img src="./client/public/favicon.ico" width="65" height="65">
+<img src="./client/public/favicon.ico" width="65" height="65" alt="favicon">
 
 # Interviwed.
 
@@ -51,6 +51,14 @@
 ##### Schedule
 
 ![Home](./assets/schedule.png)
+
+---
+
+### Azure Services Used
+
+<p align="center">
+<img src="./assets/azureServices.png" alt="azure services">
+</p>
 
 ---
 
