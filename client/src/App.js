@@ -12,34 +12,42 @@ import ThankYou from "./components/utils/ThankYou";
 import Loader from "./components/utils/Loader";
 import PrivateRoute from "./components/utils/PrivateRoute";
 import NotFound from "./components/utils/NotFound";
+import MobileView from "./pages/MobileView";
 
 const App = () => {
+  const isMobile = navigator.userAgentData.mobile;
   return (
     <>
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              <PrivateRoute from="hr">
-                <Schedule />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/login" element={<LoginHR />} />
-          <Route path="/register" element={<Register />} />
-          <Route path="/candidate/login" element={<LoginCandidate />} />
-          <Route
-            path="/test"
-            element={
-              <PrivateRoute from="candidate">
-                <Test />
-              </PrivateRoute>
-            }
-          />
-          <Route path="/end" element={<ThankYou />} />
-          <Route path="/load" element={<Loader />} />
-          <Route path="/*" element={<NotFound />} />
+          {isMobile ? (
+            <Route path="*" element={<MobileView />} />
+          ) : (
+            <>
+              <Route
+                path="/"
+                element={
+                  <PrivateRoute from="hr">
+                    <Schedule />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/login" element={<LoginHR />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/candidate/login" element={<LoginCandidate />} />
+              <Route
+                path="/test"
+                element={
+                  <PrivateRoute from="candidate">
+                    <Test />
+                  </PrivateRoute>
+                }
+              />
+              <Route path="/end" element={<ThankYou />} />
+              <Route path="/load" element={<Loader />} />
+              <Route path="/*" element={<NotFound />} />
+            </>
+          )}
         </Routes>
       </Router>
       <ToastContainer
