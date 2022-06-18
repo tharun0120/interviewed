@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import background from "../images/Background.svg";
 const Login = () => {
-  return <Container></Container>;
+  return <Container />;
 };
 
 const Container = styled.div`
