@@ -81,7 +81,7 @@ const LoginCandidate = () => {
           <Hero>
             <h1>All the Best!!</h1>
           </Hero>
-          <Divider></Divider>
+          <Divider />
           <LoginContainer>
             <h2>Login</h2>
             <Form>

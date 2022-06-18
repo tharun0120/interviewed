@@ -74,7 +74,7 @@ const LoginHR = () => {
           <Hero>
             <h1>Interviewed.</h1>
           </Hero>
-          <Divider></Divider>
+          <Divider />
           <LoginContainer>
             <h2>Login</h2>
             <Form>
