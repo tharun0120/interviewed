@@ -1,19 +1,26 @@
 const mongoose = require("mongoose");
 
-const { DB_USERNAME, DB_PRIMARY_PASSWORD, DB_PRIMARY_CONNECTION_STRING } =
-  process.env;
+const {
+  DB_USERNAME,
+  DB_PRIMARY_PASSWORD,
+  DB_PRIMARY_CONNECTION_STRING,
+  DB_DEV_MONGODB_URL,
+  DB_MONGODB_URL,
+} = process.env;
 
 mongoose
-  .connect(DB_PRIMARY_CONNECTION_STRING, {
-    auth: {
-      username: DB_USERNAME,
-      password: DB_PRIMARY_PASSWORD,
-    },
-    useNewUrlParser: true,
-  })
+  .connect(
+    process.env.NODE_ENV === "DEV" ? DB_DEV_MONGODB_URL : DB_MONGODB_URL,
+    {
+      // auth: {
+      //   username: DB_USERNAME,
+      //   password: DB_PRIMARY_PASSWORD,
+      // },
+      useNewUrlParser: true,
+    }
+  )
   .then(() => {
-    if (process.env.NODE_ENV === "DEV")
-      console.log(`Cosmos DB (MongoDB) connected successfully`);
+    console.log(`MongoDB connected successfully`);
   })
   .catch((error) => {
     console.error(error);

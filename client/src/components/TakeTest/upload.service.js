@@ -19,7 +19,7 @@ const uploadBlob = async (base64EncodedData) => {
         data: base64EncodedData,
       });
       //   console.log(body);
-      const response = await fetch("/api/uploadToAzureBlob", {
+      const response = await fetch("/api/candidate", {
         method: "POST",
         headers: {
           Accept: "application/json",

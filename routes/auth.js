@@ -4,6 +4,19 @@ const HR = require("../db/models/hr");
 const Candidate = require("../db/models/candidates");
 const axios = require("axios");
 
+const nodemailer = require("nodemailer");
+
+// create reusable transporter object using the default SMTP transport
+let transporter = nodemailer.createTransport({
+  host: "email-smtp.us-east-1.amazonaws.com",
+  port: 465,
+  secure: true, // use SSL
+  auth: {
+    user: process.env.SMTP_USERNAME,
+    pass: process.env.SMTP_PASSWORD,
+  },
+});
+
 router.post("/register/hr", async (req, res) => {
   const hr = new HR(req.body);
 
@@ -30,13 +43,45 @@ router.post("/register/candidate", auth, async (req, res) => {
   };
 
   try {
-    const response = await axios.post(
-      process.env.AZURE_EMAIL_REQUEST_ENDPOINT,
-      jsonData
-    );
+    // const response = await axios.post(
+    //   process.env.AZURE_EMAIL_REQUEST_ENDPOINT,
+    //   jsonData
+    // );
     // console.log(response.body);
+    // send mail with defined transport object
+    let info = await transporter.sendMail({
+      from: "'Interviewed' <justjay455@gmail.com>", // sender address
+      to: jsonData.email, // list of receivers
+      subject: "Assessment Scheduled", // Subject line
+      html: `
+          <p>Greetings ${jsonData.name}!</p>
+    <br>
+    <br>
+    <p>You have an interview scheduled by ${jsonData.hr_name}.</p>
+    <br>
+    <br>
+    <p>Please find the credentials below, and use the link to login and take up your assessment.</p>
+    <br>
+    <br>
+    <p>email: ${jsonData.email}</p>
+    <br>
+    <p>password: ${jsonData.password}</p>
+    <br>
+    <br>
+    <a href="/candidate/login" target="_blank" rel="noreferrer">Assessment Link</a>
+    <br>
+    <br>
+    <p>ALL THE BEST!</p>
+    <br>
+    <br>
+    <p>Regards,</p>
+    <br>
+    <p>Interviewed Team</p>
+    `, // html body
+    });
+    console.log(info);
   } catch (error) {
-    // console.log(error);
+    console.log(error);
   }
 
   try {
@@ -44,7 +89,7 @@ router.post("/register/candidate", auth, async (req, res) => {
 
     res.status(201).send({ candidate });
   } catch (error) {
-    // console.log(error);
+    console.log(error);
     res.status(400).send({ error: "Candidate Already Exists" });
   }
 });

@@ -8,7 +8,6 @@ const candidateSchema = mongoose.Schema(
     name: { type: String, required: true },
     email: {
       type: String,
-      unique: true,
       required: true,
       trim: true,
       lowercase: true,
@@ -78,19 +77,30 @@ candidateSchema.methods.toJSON = function () {
 };
 
 candidateSchema.statics.findByCredentials = async (email, password) => {
-  const candidateObject = await candidates.findOne({ email });
+  const candidateObject = await candidates.find({ email });
 
-  if (!candidateObject) {
+  if (candidateObject.length === 0) {
     throw new Error("No such User found");
   }
 
-  const isMatch = await bcrypt.compare(password, candidateObject.password);
+  let resultObject;
 
-  if (!isMatch) {
+  for (let index = 0; index < candidateObject.length; index++) {
+    const element = candidateObject[index];
+
+    const isMatch = await bcrypt.compare(password, element.password);
+
+    if (isMatch) {
+      resultObject = element;
+      break;
+    }
+  }
+
+  if (!resultObject) {
     throw new Error("Invalid password");
   }
 
-  return candidateObject;
+  return resultObject;
 };
 
 //Hashing Passwords

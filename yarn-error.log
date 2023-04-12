@@ -1,0 +1,63 @@
+Arguments: 
+  /opt/homebrew/Cellar/node/19.1.0/bin/node /opt/homebrew/bin/yarn
+
+PATH: 
+  /opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin:/usr/local/bin:/System/Cryptexes/App/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/go/bin:/Library/Apple/usr/bin:/opt/homebrew/bin:/opt/homebrew/sbin:/Library/Frameworks/Python.framework/Versions/3.9/bin:/Library/Frameworks/Python.framework/Versions/3.10/bin
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  19.1.0
+
+Platform: 
+  darwin arm64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.yarnpkg.com
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:107:26)
+
+npm manifest: 
+  {
+    "name": "interviewed",
+    "version": "1.0.0",
+    "description": "interviewed. An interview platform!",
+    "main": "server.js",
+    "scripts": {
+      "build": "cd ./client && npm install && npm run build",
+      "test": "echo \"Error: no test specified\"",
+      "start": "node server",
+      "client": "npm run start --prefix client",
+      "server": "cross-env NODE_ENV=DEV nodemon server",
+      "dev": "concurrently \"npm run client\" \"npm run server\""
+    },
+    "keywords": [
+      "azure",
+      "interview",
+      "blobs"
+    ],
+    "author": "Tharun Kumar",
+    "license": "ISC",
+    "dependencies": {
+      "@azure/storage-blob": "^12.8.0",
+      "axios": "^0.25.0",
+      "bcryptjs": "^2.4.3",
+      "concurrently": "^7.0.0",
+      "cors": "^2.8.5",
+      "cross-env": "^7.0.3",
+      "dotenv": "^14.3.2",
+      "express": "^4.17.2",
+      "jsonwebtoken": "^8.5.1",
+      "mongoose": "^6.1.8",
+      "morgan": "^1.10.0",
+      "nodemon": "^2.0.15",
+      "path": "^0.12.7",
+      "validator": "^13.7.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

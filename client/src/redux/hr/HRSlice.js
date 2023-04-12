@@ -47,15 +47,18 @@ const logoutHR = createAsyncThunk("/api/hr/logout", (body, thunkAPI) => {
   });
 });
 
-const getCandidates = createAsyncThunk("/api/hr/logout", (body, thunkAPI) => {
-  return new Promise(async (resolve, reject) => {
-    fetchCandidates(body)
-      .then((data) => resolve(data))
-      .catch((error) => {
-        reject(thunkAPI.rejectWithValue(error));
-      });
-  });
-});
+const getCandidates = createAsyncThunk(
+  "/api/hr/getCandidates",
+  (body, thunkAPI) => {
+    return new Promise(async (resolve, reject) => {
+      fetchCandidates(body)
+        .then((data) => resolve(data))
+        .catch((error) => {
+          reject(thunkAPI.rejectWithValue(error));
+        });
+    });
+  }
+);
 
 const validateToken = createAsyncThunk("/api/hr/validate", (body, thunkAPI) => {
   return new Promise(async (resolve, reject) => {
