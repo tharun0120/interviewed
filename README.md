@@ -1,81 +1,77 @@
-<img src="./client/public/favicon.ico" width="65" height="65" alt="favicon">
+<div align="center">
+  <img src="./client/public/favicon.ico" width="65" height="65" alt="Interviewed Logo">
+  <h1>Interviewed</h1>
+  <p>A robust virtual interview platform for seamless candidate assessment</p>
+  
+  [![Azure Deploy](https://img.shields.io/badge/Azure-Deployed-blue)](https://interviewed.azurewebsites.net/register)
 
-# Interviwed.
+</div>
 
-&nbsp;&nbsp;&nbsp;&nbsp;An awesome and robust interview platform where interview sessions can be scheduled, taken and assessed virtually and with ease.
+## 🎯 Overview
 
-> With the help of Interviewed the workflow for assessing and keeping track of candidates is optimised and easier than ever.
+Interviewed is a comprehensive platform that streamlines the interview process by enabling virtual assessments, automated scheduling, and candidate tracking. It provides a seamless experience for both HR professionals and candidates.
 
-&nbsp;&nbsp;&nbsp;&nbsp;Interviewed is powered by the following
+## ⚡ Key Features
 
-- 🌐 Hosted with [Azure App Service](https://azure.microsoft.com/en-in/services/app-service/)
+- **Automated Scheduling** - Easy interview scheduling with automated email notifications
+- **Real-time Recording** - Record candidate responses to predefined questions
+- **Secure Storage** - Videos stored safely in Azure Blob Storage
+- **Dashboard Analytics** - Track interview status and candidate progress
+- **Cloud-Powered** - Built on reliable Azure cloud infrastructure
 
-- 🌌 Powered by [Azure Cosmos DB](https://azure.microsoft.com/en-us/services/cosmos-db/)
+## 🏗️ Architecture
 
-- 💡 Emails are sent to candidates with the help of [Azure Logic Apps](https://azure.microsoft.com/en-in/services/logic-apps/)
+The application leverages several Azure services:
 
-- 📦 The videos of the candidates are stored with the help of [Azure Blob Storage](https://azure.microsoft.com/en-in/services/storage/blobs/)
+- 🌐 **[Azure App Service](https://azure.microsoft.com/en-in/services/app-service/)** - Application hosting
+- 🌌 **[Azure Cosmos DB](https://azure.microsoft.com/en-us/services/cosmos-db/)** - Data storage
+- 💡 **[Azure Logic Apps](https://azure.microsoft.com/en-in/services/logic-apps/)** - Email automation
+- 📦 **[Azure Blob Storage](https://azure.microsoft.com/en-in/services/storage/blobs/)** - Video storage
 
----
+## 🔄 Workflow
 
-#### Workflow
+1. HR schedules interview and provides candidate information
+2. Candidate receives email with credentials and instructions
+3. Candidate answers questions while being recorded
+4. Recording is automatically uploaded to Azure
+5. HR reviews recording and assesses candidate
 
-- Login as a HR and schedule a virtual interview/assesment to a candidate with their information like email, etc.
+## 📸 Screenshots
 
-- As the interview/assessment is scheduled candidates receive an email with the link for taking the assessment with their credentials and instructions for taking the test.
+<details>
+<summary>View Screenshots</summary>
 
-- The candidates are presented with a set of predefined questions and they can project their responses which is recorded in real time.
+### Login
 
-- Once the candidate completes the final question the recorded video is then pushed to the azure blobs.
+![Login Screen](./assets/login.png)
 
-- The HR can view the dashboard for the status of the scheduled interview and if the test is completed by the candidate the HR can download the video of the particular candidate for assessing.
+### Register
 
-#### Check it out from [here](https://interviewed.azurewebsites.net/register)
+![Register Screen](./assets/register.png)
 
----
+### Dashboard
 
-### Screens from Interviewed.
+![Dashboard](./assets/listSchedule.png)
 
-##### Login
+### Schedule Interview
 
-![login](./assets/login.png)
+![Schedule Screen](./assets/schedule.png)
 
-##### Register
+</details>
 
-![register](./assets/register.png)
+## 🌟 Future Improvements
 
-##### Dashboard
-
-![Home](./assets/listSchedule.png)
-
-##### Schedule
-
-![Home](./assets/schedule.png)
-
----
-
-### Azure Services Used
-
-<p align="center">
-<img src="./assets/azure-services.png" alt="azure services">
-</p>
-
----
-
-#### Improvements (Scope)
-
-- [ ] Use Azure Face API and Azure Cognitive Service to perform real-time analysis on the candidate's asessment video.
-
-- [ ] Create a portal where candidates can submit their resume and other certificates for further onboarding or evaluvating.
-
-- [ ] Create a portal where candidates can check for available posts and apply for the same.
+- [ ] Implement Azure Face API for sentiment analysis
+- [ ] Add real-time analytics using Azure Cognitive Services
+- [ ] Enable multi-language support
+- [ ] Add interview templates and question banks
 
 ---
 
 <p align="center">
- <img src="./assets/azure-original.svg" width="65" height="65"/>
-  <img src="./assets/mongodb-original.svg" width="65" height="65"/>
-  <img src="./assets/express-original.svg" width="65" height="65"/>
-  <img src="./assets/react-original.svg" width="65" height="65"/>
-  <img src="./assets/nodejs-original.svg" width="65" height="65"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/azure/azure-original.svg" alt="Azure" width="65" height="65"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg" alt="MongoDB" width="65" height="65"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg" alt="Express" width="65" height="65"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt="React" width="65" height="65"/>
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt="NodeJS" width="65" height="65"/>
 </p>
